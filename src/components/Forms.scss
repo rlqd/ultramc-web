@@ -1,0 +1,36 @@
+@import '../common';
+
+.input-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+    label {
+        flex-basis: calc(30% - 10px);
+        text-align: right;
+        padding-right: 10px;
+        line-height: 40px;
+    }
+    .input-base {
+        @extend .content-font-base;
+        border: 0;
+        padding: 5px;
+        background-color: #F0F4EF;
+    }
+    .input-text {
+        @extend .input-base;
+        flex-grow: 1;
+    }
+    .input-button {
+        @extend .input-base;
+        width: 70%;
+        &:hover {
+        background-color: #e8eee7;
+        }
+    }
+    .input-hint {
+        width: 70%;
+        font-size: 16px;
+        color: #770000;
+    }
+}

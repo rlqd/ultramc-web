@@ -1,0 +1,36 @@
+@import 'common';
+
+.content {
+  @extend .content-font-base;
+  margin: 0 auto;
+  width: 60%;
+
+  padding: 30px;
+  background: rgba(240, 244, 239, 0.5);
+}
+
+.footer-download {
+  display: flex;
+  margin: 10px auto 0;
+  width: 60%;
+  max-width: 560px;
+  gap: 10px;
+
+  a {
+    display: block;
+    flex-grow: 1;
+    text-align: center;
+    text-decoration: 0;
+    color: #0D1821;
+    padding: 10px;
+    background: rgba(240, 244, 239, 0.5);
+
+    svg {
+      animation-name: none;
+      animation-iteration-count: 1;
+    }
+    &:hover svg {
+      animation-name: fa-bounce;
+    }
+  }
+}
