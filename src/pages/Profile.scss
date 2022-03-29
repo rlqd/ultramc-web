@@ -2,6 +2,10 @@
     position: relative;
     width: 50%;
 
+    @media only screen and (max-width: 1000px) {
+        width: 100%;
+    }
+
     .skin-buttons {
         position: absolute;
         left: 0;
@@ -40,6 +44,17 @@
                 cursor: pointer;
             }
         }
+    }
+}
+
+.content-profile {
+    max-width: 800px;
+    display: flex;
+    gap: 10px;
+
+    @media only screen and (max-width: 1000px) {
+        flex-direction: column-reverse;
+        gap: 30px;
     }
 }
 

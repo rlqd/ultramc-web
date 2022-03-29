@@ -43,6 +43,20 @@ body {
   }
 }
 
+@media only screen and (max-width: 850px) {
+  .container {
+    width: 100%;
+    padding: 0;
+  }
+  .ultra {
+    position: initial;
+    font-size: 40px;
+    writing-mode: initial;
+    text-align: center;
+    padding: 10px;
+  }
+}
+
 .noscript-warning {
   margin: 100px auto 0;
   padding: 30px;

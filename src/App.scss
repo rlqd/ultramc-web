@@ -4,9 +4,12 @@
   @extend .content-font-base;
   margin: 0 auto;
   width: 60%;
-
   padding: 30px;
   background: rgba(240, 244, 239, 0.5);
+
+  @media only screen and (max-width: 850px) {
+    width: calc(100% - 40px);
+  }
 }
 
 .footer-download {
@@ -15,6 +18,10 @@
   width: 60%;
   max-width: 560px;
   gap: 10px;
+
+  @media only screen and (max-width: 650px) {
+      flex-direction: column;
+  }
 
   a {
     display: block;

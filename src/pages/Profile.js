@@ -73,7 +73,7 @@ export default class Profile extends React.Component {
 
     render() {
         return (
-            <div className="content" style={{maxWidth: '800px', display: 'flex', gap: '10px'}}>
+            <div className="content content-profile">
                 <div className="profile-panel" style={{flexShrink: 0}}>
                     <canvas id="skin-container"></canvas>
                     <div className="skin-buttons">
