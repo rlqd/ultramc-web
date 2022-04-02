@@ -8,6 +8,13 @@ import { Form, InputGroup } from '../components/Forms';
 
 export default class Login extends React.Component {
 
+    errorMap = {
+        missingParameters: 'Заполните поля Логин и Пароль',
+        userNotFound: 'Пользователь не найден',
+        incorrectPassword: 'Пароль не совпадает',
+        unknownError: 'Неизвестная ошибка',
+    };
+
     constructor(props)
     {
         super(props);
@@ -22,18 +29,22 @@ export default class Login extends React.Component {
             this.setState({error: null});
             nprogress.start();
             try {
-                var res = await axios.get('/auth.json');
+                var res = await axios.post('/api/web/login.php', {
+                    username: data.name,
+                    password: data.password,
+                });
                 if (res.data.success) {
                     this.props.onAuth(res.data.user);
                 } else {
-                    this.setState({error: res.data.error});
+                    var errorMessage = this.errorMap[res.data.error] ?? this.errorMap.unknownError;
+                    this.setState({error: errorMessage});
                 }
             } catch (error) {
                 this.setState({error: String(error)});
             }
             nprogress.done();
         } else {
-            this.setState({error: 'Заполните поля Логин и Пароль'});
+            this.setState({error: this.errorMap.missingParameters});
         }
     }.bind(this);
 

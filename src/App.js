@@ -26,7 +26,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     nprogress.start();
-    var res = await fetch('/api.json');
+    var res = await fetch('/api/web/status.php');
     nprogress.done();
 
     if (res.ok) {

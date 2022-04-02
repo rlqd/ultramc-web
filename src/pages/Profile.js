@@ -39,9 +39,11 @@ export default class Profile extends React.Component {
     runAnimation = function(e) {
         this.setState({
             animation: e.target.dataset.key,
+            paused: false,
         });
         this.currentAnimation.resetAndRemove();
         this.currentAnimation = this.skinViewer.animations.add(this.animations[e.target.dataset.key][1]);
+        this.skinViewer.animations.paused = false;
     }.bind(this);
 
     pauseAnimation = function() {
