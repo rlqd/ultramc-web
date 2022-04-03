@@ -1,0 +1,29 @@
+.footer-download {
+    display: flex;
+    margin: 10px auto 0;
+    width: 100%;
+    max-width: 560px;
+    gap: 10px;
+
+    @media only screen and (max-width: 650px) {
+        flex-direction: column;
+    }
+
+    a {
+        display: block;
+        flex-grow: 1;
+        text-align: center;
+        text-decoration: 0;
+        color: #0D1821;
+        padding: 10px;
+        background: rgba(240, 244, 239, 0.5);
+
+        svg {
+        animation-name: none;
+        animation-iteration-count: 1;
+        }
+        &:hover svg {
+        animation-name: fa-bounce;
+        }
+    }
+}

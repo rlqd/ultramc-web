@@ -1,66 +1,25 @@
-.content > .profile-panel {
-    position: relative;
+.profile-panel {
     width: 50%;
 
     @media only screen and (max-width: 1000px) {
         width: 100%;
     }
-
-    .skin-buttons {
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        width: 100px;
-        gap: 10px;
-
-        .animation-button {
-            width: 100%;
-            height: 35px;
-            line-height: 35px;
-            text-align: center;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.1);
-
-            &.active {
-                box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-            }
-        }
-
-        .skin-controls {
-            width: 100%;
-            height: 35px;
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-
-            .skin-control {
-                flex-grow: 1;
-                height: 35px;
-                line-height: 38px;
-                background-color: rgba(0, 0, 0, 0.1);
-                text-align: center;
-                cursor: pointer;
-            }
-        }
-    }
 }
 
 .content-profile {
     max-width: 800px;
-    display: flex;
-    gap: 10px;
 
-    @media only screen and (max-width: 1000px) {
-        flex-direction: column-reverse;
-        gap: 30px;
+    .tab-skin {
+        display: flex;
+        gap: 10px;
+
+        @media only screen and (max-width: 1000px) {
+            flex-direction: column;
+            gap: 30px;
+        }
     }
-}
-
-#skin-container {
-    display: block;
-    margin: 0 auto;
-    width: 350px;
-    height: 350px;
+    .tab-account {
+        max-width: 500px;
+        margin: 0 auto;
+    }
 }

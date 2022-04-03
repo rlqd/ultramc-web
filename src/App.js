@@ -1,7 +1,6 @@
 import React from 'react';
+import axios from 'axios';
 import nprogress from 'nprogress';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { regular } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 import './App.scss';
 import IDFactory from './lib/IDFactory';
@@ -22,6 +21,20 @@ export default class App extends React.Component {
       loggedIn: true,
       user: user,
     });
+  }.bind(this);
+
+  logout = async function() {
+    nprogress.start();
+    try {
+      axios.post('/api/web/logout.php');
+      this.setState({
+        loggedIn: false,
+        user: null,
+      });
+    } catch(e) {
+      alert(String(e));
+    }
+    nprogress.done();
   }.bind(this);
 
   async componentDidMount() {
@@ -50,21 +63,8 @@ export default class App extends React.Component {
     } else if (!this.state.loggedIn) {
       return <Login onAuth={this.authenticate} />;
     } else {
-      return <Profile user={this.state.user} />;
+      return <Profile user={this.state.user} onLogout={this.logout} />;
     }
-  }
-
-  renderFooter() {
-      return (
-        <div className="footer-download">
-          <a href="/launcher/ultramc.exe">
-            <FontAwesomeIcon icon={regular('circle-down')} bounce /> Лаунчер
-          </a>
-          <a href="/launcher/ultramc-creator-tools.jar">
-          <FontAwesomeIcon icon={regular('circle-down')} bounce /> Конструктор модпаков
-          </a>
-        </div>
-      );
   }
 
   render() {
@@ -72,7 +72,6 @@ export default class App extends React.Component {
     return (
       <React.Fragment>
         {this.getPageByState()}
-        {this.renderFooter()}
       </React.Fragment>
     );
   }

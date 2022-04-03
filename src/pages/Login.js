@@ -5,6 +5,8 @@ import nprogress from 'nprogress';
 import './Login.scss';
 
 import { Form, InputGroup } from '../components/Forms';
+import Window from '../components/Window';
+import FooterDownload from './elements/FooterDownload';
 
 export default class Login extends React.Component {
 
@@ -56,14 +58,17 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div className="content" style={{maxWidth: '500px'}}>
-                <div className="hello">Добро пожаловать</div>
-                <Form onSubmit={this.attemptLogin}>
-                    <InputGroup label="Логин" name="name" type="text" />
-                    <InputGroup label="Пароль" name="password" type="password" />
-                    <InputGroup type="submit" value="Войти" />
-                    {this.renderError()}
-                </Form>
+            <div className="content" style={{maxWidth: '560px'}}>
+                <Window>
+                    <div className="hello">Добро пожаловать</div>
+                    <Form onSubmit={this.attemptLogin}>
+                        <InputGroup label="Логин" name="name" type="text" />
+                        <InputGroup label="Пароль" name="password" type="password" />
+                        <InputGroup type="submit" value="Войти" />
+                        {this.renderError()}
+                    </Form>
+                </Window>
+                <FooterDownload />
             </div>
         );
     }

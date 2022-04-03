@@ -1,0 +1,29 @@
+@import '../common';
+
+.window {
+    @extend .content-font-base;
+    background: rgba(240, 244, 239, 0.5);
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    }
+
+    .window-tabs {
+    display: flex;
+    gap: 5px;
+    @extend .content-font-base;
+
+    .tab {
+        background: rgba(240, 244, 239, 0.5);
+        padding: 5px 15px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        user-select: none;
+
+        &.active {
+        margin-bottom: 0;
+        padding-bottom: 5px;
+        cursor: default;
+        }
+    }
+}

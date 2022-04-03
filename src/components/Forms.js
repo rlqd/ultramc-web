@@ -84,9 +84,11 @@ class InputGroup extends React.Component
         var commonProps = {
             id: this.getInputId(),
             type: inputType,
-            onChange: this.context.onInput,
         };
-        for (var prop of ['name', 'value']) {
+        if (this.context) {
+            commonProps.onChange = this.context.onInput;
+        }
+        for (var prop of ['name', 'value', 'style', 'onClick']) {
             if (this.props[prop] !== undefined) {
                 commonProps[prop] = this.props[prop];
             }
