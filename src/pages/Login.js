@@ -29,22 +29,10 @@ export default class Login extends React.Component {
         e.preventDefault();
         if (data && data.name && data.password) {
             this.setState({error: null});
-            nprogress.start();
-            try {
-                var res = await axios.post('/api/web/login.php', {
-                    username: data.name,
-                    password: data.password,
-                });
-                if (res.data.success) {
-                    this.props.onAuth(res.data.user);
-                } else {
-                    var errorMessage = this.errorMap[res.data.error] ?? this.errorMap.unknownError;
-                    this.setState({error: errorMessage});
-                }
-            } catch (error) {
-                this.setState({error: String(error)});
+            var err = await this.props.user.authenticate(data.name, data.password);
+            if (err !== true) {
+                this.setState({error: this.errorMap[err] ?? err});
             }
-            nprogress.done();
         } else {
             this.setState({error: this.errorMap.missingParameters});
         }

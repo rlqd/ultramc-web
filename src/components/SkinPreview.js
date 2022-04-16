@@ -27,7 +27,7 @@ export default class SkinPreview extends React.Component {
             canvas: document.getElementById('skin-container'),
             width: 350,
             height: 350,
-            skin: this.props.skinUrl ?? '/default_skin.png',
+            skin: this.props.skinUrl || '/default_skin.png',
         });
         let control = createOrbitControls(this.skinViewer);
 	    control.enableRotate = true;
@@ -38,7 +38,7 @@ export default class SkinPreview extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.skinUrl !== prevProps.skinUrl) {
-            this.skinViewer.loadSkin(this.props.skinUrl);
+            this.skinViewer.loadSkin(this.props.skinUrl || '/default_skin.png');
         }
     }
 
@@ -69,12 +69,12 @@ export default class SkinPreview extends React.Component {
                 <div key={'anim-btn-' + key} className={className} onClick={this.runAnimation} data-key={key}>{this.animations[key][0]}</div>
             );
         }
-        var className = 'animation-button';
+        var classNamePause = 'animation-button';
         if (this.state.paused) {
-            className += ' active';
+            classNamePause += ' active';
         }
         buttons.push(
-            <div key="anim-btn-pause" className={className} onClick={this.pauseAnimation}>Пауза</div>
+            <div key="anim-btn-pause" className={classNamePause} onClick={this.pauseAnimation}>Пауза</div>
         );
         return buttons;
     }

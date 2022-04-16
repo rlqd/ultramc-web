@@ -29,7 +29,7 @@ class Window extends React.Component {
     renderTabHeader() {
         var tabs = [];
         React.Children.forEach(this.props.children, function(child, i) {
-            if (child.type?.name === 'Tab') {
+            if (child.type === Tab || child.type?.name === 'Tab') {
                 var className = 'tab';
                 if (this.state.activeTab === child.props.id) {
                     className += ' active';

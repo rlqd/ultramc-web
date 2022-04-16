@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import nprogress from 'nprogress';
+import IDFactory from './lib/IDFactory';
+import UserFacade from './lib/UserFacade';
 
 import './App.scss';
-import IDFactory from './lib/IDFactory';
 
 import Fatal from './pages/Fatal';
 import Login from './pages/Login';
@@ -16,26 +16,12 @@ export default class App extends React.Component {
     this.state = null;
   }
 
-  authenticate = function(user) {
-    this.setState({
-      loggedIn: true,
-      user: user,
+  userFacade() {
+    return new UserFacade(this, this.state?.user, {
+      start: nprogress.start,
+      done: nprogress.done,
     });
-  }.bind(this);
-
-  logout = async function() {
-    nprogress.start();
-    try {
-      axios.post('/api/web/logout.php');
-      this.setState({
-        loggedIn: false,
-        user: null,
-      });
-    } catch(e) {
-      alert(String(e));
-    }
-    nprogress.done();
-  }.bind(this);
+  }
 
   async componentDidMount() {
     nprogress.start();
@@ -61,9 +47,9 @@ export default class App extends React.Component {
     if (this.state.error) {
       return <Fatal error={this.state.error} />;
     } else if (!this.state.loggedIn) {
-      return <Login onAuth={this.authenticate} />;
+      return <Login user={this.userFacade()} />;
     } else {
-      return <Profile user={this.state.user} onLogout={this.logout} />;
+      return <Profile user={this.userFacade()} />;
     }
   }
 

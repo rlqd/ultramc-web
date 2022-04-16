@@ -24,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "rsync -rv build/ root@server.andrey96.ru:/var/www/beta.ultramc.ru"
   },
   "eslintConfig": {
     "extends": [
