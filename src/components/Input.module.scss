@@ -1,0 +1,53 @@
+@use '../common';
+
+.inputGroup {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    gap: 10px;
+
+    @media only screen and (max-width: 650px) {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    label {
+        width: calc(30% - 10px);
+        text-align: right;
+        line-height: 40px;
+        @media only screen and (max-width: 650px) {
+            text-align: left;
+            line-height: initial;
+            font-size: 20px;
+        }
+    }
+}
+
+.hint {
+    width: 70%;
+    font-size: 16px;
+    color: #770000;
+}
+
+.base {
+    @extend .content-font-base;
+    border: 0;
+    padding: 5px;
+    background-color: #F0F4EF;
+    flex-grow: 1;
+    max-width: 70%;
+    @media only screen and (max-width: 650px) {
+        max-width: 100%;
+    }
+}
+
+.text {
+    @extend .base;
+}
+
+.button {
+    @extend .base;
+    &:hover {
+        background-color: #e8eee7;
+    }
+}

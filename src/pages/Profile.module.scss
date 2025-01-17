@@ -1,0 +1,22 @@
+.panel {
+    width: 50%;
+
+    @media only screen and (max-width: 1000px) {
+        width: 100%;
+    }
+}
+
+.tabSkin {
+    display: flex;
+    gap: 10px;
+
+    @media only screen and (max-width: 1000px) {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+
+.tabAccount {
+    max-width: 500px;
+    margin: 0 auto;
+}

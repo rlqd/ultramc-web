@@ -1,0 +1,76 @@
+@use '@fortawesome/fontawesome-free/css/all.css';
+
+body {
+  background: #344966;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+.container {
+  min-height: calc(100vh - 100px);
+  width: calc(100% - 380px);
+  margin: 0 auto;
+  padding-top: 100px;
+  background-image: url("./assets/background.svg");
+  background-size: 25%;
+
+  @media only screen and (max-width: 1500px) {
+    background-size: 33.3%;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    background-size: 50%;
+  }
+}
+
+.content {
+  margin: 0 auto;
+  width: 60%;
+
+  @media only screen and (max-width: 850px) {
+    width: calc(100% - 40px);
+  }
+}
+
+.ultra {
+  display: block;
+  text-decoration: none;
+  position: fixed;
+  left: 0;
+  bottom: 50px;
+  font-size: 200px;
+  color: #F0F4EF;
+  writing-mode: vertical-lr;
+  user-select: none;
+}
+
+@media only screen and (max-height: 670px) {
+  .container {
+    width: calc(100% - 200px);
+  }
+  .ultra {
+    font-size: 100px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .container {
+    width: 100%;
+    padding: 0;
+  }
+  .ultra {
+    position: initial;
+    font-size: 40px;
+    writing-mode: initial;
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+.noscript-warning {
+  margin: 100px auto 0;
+  padding: 30px;
+  width: 60%;
+  text-align: center;
+  background: rgba(240, 244, 239, 0.5);
+}

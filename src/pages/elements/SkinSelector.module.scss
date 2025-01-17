@@ -1,0 +1,66 @@
+
+.selector {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.button {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.active {
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    cursor: default;
+}
+
+.add {
+    display: block;
+    width: 64px;
+    height: 64px;
+    border: 1px dashed #0D1821;
+    font-size: 48px;
+    text-align: center;
+    line-height: 64px;
+    margin: 18px;
+    user-select: none;
+}
+
+// Mixin is ported from https://github.com/rkkoszewski/minecraft-css-3d-skin-viewer
+@mixin skin-tile($x, $y, $divider: 1, $zoom: 1, $offset_x: 0, $offset_y: 0) {
+    background-position: (-1px * ( $x * $divider + $offset_x ) * $zoom) (-1px * ( $y * $divider + $offset_y ) * $zoom);
+}
+
+$zoom: 8;
+.face {
+    width: 8px * $zoom;
+    height: 8px * $zoom;
+    margin: calc((100px - (8px * $zoom)) / 2);
+    overflow: hidden;
+    display: inline-block;
+
+    image-rendering: optimizeSpeed;             /* Legal fallback */
+    image-rendering: -moz-crisp-edges;          /* Firefox        */
+    image-rendering: -o-crisp-edges;            /* Opera          */
+    image-rendering: -webkit-optimize-contrast; /* Safari         */
+    image-rendering: optimize-contrast;         /* CSS3 Proposed  */
+    image-rendering: crisp-edges;               /* CSS4 Proposed  */
+    image-rendering: pixelated;                 /* CSS4 Proposed  */
+
+    background-size: 64px * $zoom;
+    @include skin-tile(1, 1, 8, $zoom);
+}
+.face::after {
+    content: " ";
+    width: 8px * $zoom;
+    height: 8px * $zoom;
+    overflow: hidden;
+    display: inline-block;
+
+    background-image: inherit;
+    background-size: calc((9/8) * 64px * $zoom);
+    @include skin-tile(5, 1, 9, $zoom, 0.5, 0.5);
+}
