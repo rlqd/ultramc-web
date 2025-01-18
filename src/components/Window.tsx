@@ -9,6 +9,7 @@ interface WindowProps {
     cssMaxWidth: string;
     children: React.ReactNode;
     footer?: React.ReactNode;
+    className?: string;
 }
 
 interface TabProps {
@@ -51,7 +52,7 @@ export default function Window(props: WindowProps) {
     return (
         <div className="content" style={{maxWidth: props.cssMaxWidth}}>
             <div className={styles.tabs}>{tabHeaders}</div>
-            <div className={styles.window}>{content}</div>
+            <div className={styles.window + (props.className ? ` ${props.className}` : '')}>{content}</div>
             {props.footer}
         </div>
     );

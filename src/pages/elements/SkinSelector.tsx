@@ -1,17 +1,24 @@
+import { useState } from 'react';
 import type UserManager from '../../UserManager';
 import { getErrorMessage } from "../../utils";
 
 import styles from './SkinSelector.module.scss';
 
-export default function SkinSelector({userManager}: {userManager: UserManager}) {
-    const buttons: React.ReactNode[] = [];
+export interface SkinSelectorProps {
+    userManager: UserManager;
+};
+
+export default function SkinSelector({userManager}: SkinSelectorProps) {
+    const [loading, setLoading] = useState(false);
 
     const uploadSkin = function(e: React.ChangeEvent<HTMLInputElement>) {
         if (e.currentTarget.files?.length !== 1) {
             return;
         }
+        setLoading(true);
         userManager.uploadSkin(e.currentTarget.files[0])
-            .catch(e => alert(getErrorMessage(e)));
+            .catch(e => alert(getErrorMessage(e)))
+            .finally(() => setLoading(false));
     }
 
     const selectSkin = function(e: React.MouseEvent<HTMLDivElement>) {
@@ -20,10 +27,13 @@ export default function SkinSelector({userManager}: {userManager: UserManager}) 
         if (currentId == newId) {
             return;
         }
+        setLoading(true);
         userManager.selectSkin(newId)
-            .catch(e => alert(getErrorMessage(e)));
+            .catch(e => alert(getErrorMessage(e)))
+            .finally(() => setLoading(false));
     }
 
+    const buttons: React.ReactNode[] = [];
     let hasSelected = false;
     for (const skin of userManager.userData.skins) {
         if (skin.selected) {
@@ -44,7 +54,7 @@ export default function SkinSelector({userManager}: {userManager: UserManager}) 
     );
 
     return (
-        <div className={styles.selector}>
+        <div className={styles.selector + (loading ? ' loading-overlay' : '')} inert={loading}>
             {buttons}
             <label className={styles.button} htmlFor="skin-upload">
                 <div className={styles.add}>+</div>

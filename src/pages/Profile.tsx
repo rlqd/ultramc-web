@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type UserManager from "../UserManager";
 import Window from "../components/Window";
 import Input from "../components/Input";
@@ -9,17 +10,21 @@ import FooterDownload from "./elements/FooterDownload";
 
 export default function Profile({userManager}: {userManager: UserManager}) {
     const activeTab = userManager.userData.passwordResetRequired ? 'account' : 'skin';
+    const [loading, setLoading] = useState(false);
 
     const handleLogout = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        userManager.logout().catch(() => alert('Ошибка при выходе'));
+        setLoading(true);
+        userManager.logout()
+            .catch(() => alert('Ошибка при выходе'))
+            .finally(() => setLoading(false));
     };
 
     return (
-        <Window cssMaxWidth="800px" activeTab={activeTab} footer={<FooterDownload />}>
+        <Window cssMaxWidth="800px" activeTab={activeTab} footer={<FooterDownload />} className={loading ? 'loading-overlay' : undefined}>
             <Window.Tab id="account" header="Аккаунт" className={styles.tabAccount}>
                 <div>Привет, {userManager.userData.name}!</div>
-                <form onSubmit={handleLogout}>
+                <form onSubmit={handleLogout} inert={loading}>
                     <Input type="submit" name="logout" value="Выйти" style={{maxWidth: '100%'}} />
                 </form>
             </Window.Tab>

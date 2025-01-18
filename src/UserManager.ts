@@ -13,6 +13,10 @@ export default class UserManager {
         private updateData: (data: UserData|null) => void,
     ) {}
 
+    public get isLoading() {
+        return this.data === undefined;
+    }
+
     public get isLoggedIn() {
         return !!this.data;
     }

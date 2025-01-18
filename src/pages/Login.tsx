@@ -15,23 +15,26 @@ const errorMap: Record<string,string> = {
 };
 
 export default function Login({userManager}: {userManager: UserManager}) {
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string>();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         if (data.get('name') && data.get('password')) {
+            setLoading(true);
             userManager.authenticate(data.get('name') as string, data.get('password') as string)
-                .catch(e => setError(getErrorMessage(e, errorMap)));
+                .catch(e => setError(getErrorMessage(e, errorMap)))
+                .finally(() => setLoading(false));
         } else {
             setError(errorMap.missingParameters);
         }
     };
 
     return (
-        <Window cssMaxWidth='560px' footer={<FooterDownload />}>
+        <Window cssMaxWidth='560px' footer={<FooterDownload />} className={loading ? 'loading-overlay' : undefined}>
             <div className={styles.hello}>Добро пожаловать</div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} inert={loading}>
                 <Input label="Логин" name="name" type="text" />
                 <Input label="Пароль" name="password" type="password" />
                 <Input type="submit" name="submit" value="Войти" />
