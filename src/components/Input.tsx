@@ -1,13 +1,16 @@
+import { Link } from 'react-router';
 import styles from './Input.module.scss';
 
 const defaultIdPrefix = 'form-input-';
 
-type InputType = 'text' | 'password' | 'button' | 'submit';
+type InputType = 'text' | 'password' | 'button' | 'submit' | 'link' | 'route';
 const inputElements: Record<InputType, React.ComponentType<InputProps>> = {
     text: Text,
     password: Text,
     button: Button,
     submit: Button,
+    link: AnchorLink,
+    route: RouteLink,
 };
 
 interface InputProps {
@@ -18,6 +21,7 @@ interface InputProps {
     id?: string;
     style?: React.CSSProperties;
     containerStyle?: React.CSSProperties;
+    main?: boolean;
 }
 
 export default function Input(props: InputProps) {
@@ -52,6 +56,18 @@ function Text(props: InputProps) {
     return createHtmlInput(styles.text, props);
 }
 
+function AnchorLink(props: InputProps) {
+    return (
+        <a href={props.value} className={styles.button} style={props.style}>{props.name}</a>
+    );
+}
+
+function RouteLink(props: InputProps) {
+    return (
+        <Link className={styles.button} to={props.value ?? "/"} style={props.style}>{props.name}</Link>
+    );
+}
+
 function createHtmlInput(className: string, props: InputProps) {
     const inputId = props.id ?? (defaultIdPrefix + props.name);
 
@@ -61,6 +77,6 @@ function createHtmlInput(className: string, props: InputProps) {
         name={props.name}
         value={props.value}
         style={props.style}
-        className={className}
+        className={className + (props.main ? ` ${styles.main}` : '')}
     />;
 }

@@ -36,6 +36,8 @@
     background-color: #F0F4EF;
     flex-grow: 1;
     max-width: 70%;
+    display: block;
+    box-sizing: border-box;
     @media only screen and (max-width: 650px) {
         max-width: 100%;
     }
@@ -47,7 +49,17 @@
 
 .button {
     @extend .base;
+    text-align: center;
+    text-decoration: none;
     &:hover {
         background-color: #e8eee7;
+    }
+}
+
+.main {
+    color: white;
+    background-color: #253a5b;
+    &:hover {
+        background-color: #1c2b44;
     }
 }

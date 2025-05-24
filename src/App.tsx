@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useUserManager } from "./UserManager"
+import { HashRouter, Route, Routes } from "react-router";
+import UserManager, { useUserManager } from "./UserManager"
 import { getErrorMessage } from "./utils";
 
 import Error from "./pages/Error"
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Loading from "./pages/Loading";
+import Password from "./pages/Password";
+import Mojang from "./pages/Mojang";
 
 export default function App() {
     const userManager = useUserManager();
@@ -22,7 +25,22 @@ export default function App() {
     }
 
     if (userManager.isLoggedIn) {
-        return <Profile userManager={userManager} />
+        if (userManager.userData.passwordResetRequired) {
+            return <Password userManager={userManager} />
+        }
+        return <Main userManager={userManager} />
     }
     return <Login userManager={userManager} />;
+}
+
+function Main({userManager}: {userManager: UserManager}) {
+    return (
+        <HashRouter>
+            <Routes>
+                <Route index element={<Profile userManager={userManager} />} />
+                <Route path="/password" element={<Password userManager={userManager} />} />
+                <Route path="/mojang" element={<Mojang userManager={userManager} />} />
+            </Routes>
+        </HashRouter>
+    );
 }

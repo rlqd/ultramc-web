@@ -7,9 +7,9 @@ import SkinPreview from "./elements/SkinPreview";
 import styles from "./Profile.module.scss";
 import SkinSelector from "./elements/SkinSelector";
 import FooterDownload from "./elements/FooterDownload";
+import MojangProfile from "./elements/MojangProfile";
 
 export default function Profile({userManager}: {userManager: UserManager}) {
-    const activeTab = userManager.userData.passwordResetRequired ? 'account' : 'skin';
     const [loading, setLoading] = useState(false);
 
     const handleLogout = (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,9 +21,12 @@ export default function Profile({userManager}: {userManager: UserManager}) {
     };
 
     return (
-        <Window cssMaxWidth="800px" activeTab={activeTab} footer={<FooterDownload />} className={loading ? 'loading-overlay' : undefined}>
+        <Window cssMaxWidth="800px" activeTab="account" footer={<FooterDownload />} className={loading ? 'loading-overlay' : undefined}>
             <Window.Tab id="account" header="Аккаунт" className={styles.tabAccount}>
                 <div>Привет, {userManager.userData.name}!</div>
+                {userManager.userData.mojangUUID ? <MojangProfile uuid={userManager.userData.mojangUUID} /> : null}
+                <Input type="route" name={userManager.userData.mojangUUID ? "Сменить лицензию" : "Привязать лицензию"} value="/mojang" style={{maxWidth: '100%'}} />
+                <Input type="route" name="Сменить пароль" value="/password" style={{maxWidth: '100%'}} />
                 <form onSubmit={handleLogout} inert={loading}>
                     <Input type="submit" name="logout" value="Выйти" style={{maxWidth: '100%'}} />
                 </form>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "./api";
-import type { UserData } from "./api";
+import type { ChangePasswordRequest, UserData } from "./api";
 
 export function useUserManager(): UserManager {
     const [data, setData] = useState<UserData|null>();
@@ -56,6 +56,37 @@ export default class UserManager {
     async logout(): Promise<void> {
         await api.logout();
         this.updateData(null);
+    }
+
+    async changePassword(newPassword: string, newPasswordRepeat: string, oldPassword: string|null = null): Promise<void> {
+        const req: ChangePasswordRequest = {
+            new_password: newPassword,
+            new_password_repeat: newPasswordRepeat,
+        };
+        if (oldPassword !== null) {
+            req.old_password = oldPassword;
+        }
+        const resp = await api.changePassword(req);
+        if (!resp.success) {
+            throw new Error(resp.error);
+        }
+        if (this.data?.passwordResetRequired) {
+            const newData = {...this.data} as UserData;
+            newData.passwordResetRequired = false;
+            this.updateData(newData);
+        }
+    }
+
+    async linkMojang(mojangUsername: string): Promise<void> {
+        const resp = await api.linkMojang({mojang_username: mojangUsername});
+        if (!resp.success) {
+            throw new Error(resp.error);
+        }
+        if (this.data?.mojangUUID != resp.mojangUUID) {
+            const newData = {...this.data} as UserData;
+            newData.mojangUUID = resp.mojangUUID;
+            this.updateData(newData);
+        }
     }
 
     async uploadSkin(file: Blob): Promise<void> {
