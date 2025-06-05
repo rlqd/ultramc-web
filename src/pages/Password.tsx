@@ -13,7 +13,7 @@ const errorMap: Record<string,string> = {
     newPasswordTooWeak: 'Новый пароль слишком простой (мин. 8 символов)',
 };
 
-export default function Password({userManager}: {userManager: UserManager}) {
+export default function Password({userManager, forceChange}: {userManager: UserManager, forceChange: boolean}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string>();
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Password({userManager}: {userManager: UserManager}) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const isFilled = data.get('newPassword') && data.get('newPasswordRepeat')
-            && (userManager.userData.passwordResetRequired || data.get('oldPassword'));
+            && (forceChange || data.get('oldPassword'));
         if (isFilled) {
             setLoading(true);
             userManager.changePassword(
@@ -30,7 +30,7 @@ export default function Password({userManager}: {userManager: UserManager}) {
                 data.get('newPasswordRepeat') as string,
                 data.get('oldPassword') as string|null,
             )
-            .then(() => navigate('/'))
+            .then(() => !forceChange && navigate('/'))
             .catch(e => setError(getErrorMessage(e, errorMap)))
             .finally(() => setLoading(false));
         } else {
@@ -41,13 +41,13 @@ export default function Password({userManager}: {userManager: UserManager}) {
     return (
         <Window cssMaxWidth='800px' className={loading ? 'loading-overlay' : undefined}>
             <form onSubmit={handleSubmit} inert={loading}>
-                { userManager.userData.passwordResetRequired
+                { forceChange
                     ? (<center>Ваш пароль был сброшен!<br />Необходимо установить новый пароль.</center>)
                     : (<Input label="Старый пароль" name="oldPassword" type="password" />) }
                 <Input label="Новый пароль" name="newPassword" type="password" />
                 <Input label="Новый еще раз" name="newPasswordRepeat" type="password" />
                 <Input type="submit" name="submit" value="Сменить пароль" main />
-                { userManager.userData.passwordResetRequired ? null : (<Input type="route" name="Назад" />) }
+                { forceChange ? null : (<Input type="route" name="Назад" />) }
                 {error && <Input.Hint text={error} />}
             </form>
         </Window>

@@ -21,14 +21,16 @@ export default function App() {
         return <Error message={error} />;
     }
     if (userManager.isLoading) {
-        return <Loading />
+        return <Loading />;
     }
 
     if (userManager.isLoggedIn) {
         if (userManager.userData.passwordResetRequired) {
-            return <Password userManager={userManager} />
+            return (
+                <HashRouter><Password userManager={userManager} forceChange /></HashRouter>
+            );
         }
-        return <Main userManager={userManager} />
+        return <Main userManager={userManager} />;
     }
     return <Login userManager={userManager} />;
 }
@@ -38,7 +40,7 @@ function Main({userManager}: {userManager: UserManager}) {
         <HashRouter>
             <Routes>
                 <Route index element={<Profile userManager={userManager} />} />
-                <Route path="/password" element={<Password userManager={userManager} />} />
+                <Route path="/password" element={<Password userManager={userManager} forceChange={false} />} />
                 <Route path="/mojang" element={<Mojang userManager={userManager} />} />
             </Routes>
         </HashRouter>
