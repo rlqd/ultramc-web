@@ -1,3 +1,4 @@
+import loc from '../loc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import type UserManager from '../UserManager';
@@ -6,11 +7,11 @@ import Window from '../components/Window';
 import Input from '../components/Input';
 
 const errorMap: Record<string,string> = {
-    missingParameters: 'Заполните все поля',
-    incorrectPassword: 'Пароль не совпадает',
-    unknownError: 'Неизвестная ошибка',
-    newPasswordMismatch: 'Новые пароли не совпадают',
-    newPasswordTooWeak: 'Новый пароль слишком простой (мин. 8 символов)',
+    missingParameters: loc`Please fill all fields`,
+    incorrectPassword: loc`Password does not match`,
+    unknownError: loc`Unknown error`,
+    newPasswordMismatch: loc`New passwords does not match`,
+    newPasswordTooWeak: loc`New password is too easy (min. 8 characters)`,
 };
 
 export default function Password({userManager, forceChange}: {userManager: UserManager, forceChange: boolean}) {
@@ -42,12 +43,12 @@ export default function Password({userManager, forceChange}: {userManager: UserM
         <Window cssMaxWidth='800px' className={loading ? 'loading-overlay' : undefined}>
             <form onSubmit={handleSubmit} inert={loading}>
                 { forceChange
-                    ? (<center>Ваш пароль был сброшен!<br />Необходимо установить новый пароль.</center>)
-                    : (<Input label="Старый пароль" name="oldPassword" type="password" />) }
-                <Input label="Новый пароль" name="newPassword" type="password" />
-                <Input label="Новый еще раз" name="newPasswordRepeat" type="password" />
-                <Input type="submit" name="submit" value="Сменить пароль" main />
-                { forceChange ? null : (<Input type="route" name="Назад" />) }
+                    ? (<center>{loc`Your password was reset!`}<br />{loc`It is required to set a new password.`}</center>)
+                    : (<Input label={loc`Old password`} name="oldPassword" type="password" />) }
+                <Input label={loc`New password`} name="newPassword" type="password" />
+                <Input label={loc`New again`} name="newPasswordRepeat" type="password" />
+                <Input type="submit" name="submit" value={loc`Change password`} main />
+                { forceChange ? null : (<Input type="route" name={loc`Back`} />) }
                 {error && <Input.Hint text={error} />}
             </form>
         </Window>

@@ -1,3 +1,4 @@
+import loc from '../../loc';
 import { useEffect, useState, useRef } from 'react';
 import {
     SkinViewer,
@@ -17,10 +18,10 @@ const animations = {
 };
 type animationType = keyof typeof animations;
 const animationNames: Record<string, string> = {
-    idle: 'Стоит',
-    walk: 'Идет',
-    run: 'Бежит',
-    fly: 'Летит',
+    idle: loc`Idle`,
+    walk: loc`Walk`,
+    run: loc`Run`,
+    fly: loc`Fly`,
 };
 
 export default function SkinPreview({skinUrl}: {skinUrl?: string}) {
@@ -80,7 +81,7 @@ export default function SkinPreview({skinUrl}: {skinUrl?: string}) {
             key="anim-btn-pause"
             className={styles.animationButton + (paused ? ` ${styles.active}` : '')}
             onClick={toggleAnimation}
-        >Пауза</div>
+        >{loc`Pause`}</div>
     );
 
     return (

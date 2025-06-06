@@ -1,3 +1,4 @@
+import loc from '../loc';
 import { useState } from 'react';
 import type UserManager from '../UserManager';
 import { getErrorMessage } from "../utils";
@@ -8,10 +9,10 @@ import FooterDownload from './elements/FooterDownload';
 import styles from './Login.module.scss';
 
 const errorMap: Record<string,string> = {
-    missingParameters: 'Заполните поля Логин и Пароль',
-    userNotFound: 'Пользователь не найден',
-    incorrectPassword: 'Пароль не совпадает',
-    unknownError: 'Неизвестная ошибка',
+    missingParameters: loc`Enter both Username and Password`,
+    userNotFound: loc`User not found`,
+    incorrectPassword: loc`Password does not match`,
+    unknownError: loc`Unknown error`,
 };
 
 export default function Login({userManager}: {userManager: UserManager}) {
@@ -33,11 +34,11 @@ export default function Login({userManager}: {userManager: UserManager}) {
 
     return (
         <Window cssMaxWidth='560px' footer={<FooterDownload />} className={loading ? 'loading-overlay' : undefined}>
-            <div className={styles.hello}>Добро пожаловать</div>
+            <div className={styles.hello}>{loc`Welcome`}</div>
             <form onSubmit={handleSubmit} inert={loading}>
-                <Input label="Логин" name="name" type="text" />
-                <Input label="Пароль" name="password" type="password" />
-                <Input type="submit" name="submit" value="Войти" />
+                <Input label={loc`Username`} name="name" type="text" />
+                <Input label={loc`Password`} name="password" type="password" />
+                <Input type="submit" name="submit" value={loc`Login`} />
                 {error && <Input.Hint text={error} />}
             </form>
         </Window>

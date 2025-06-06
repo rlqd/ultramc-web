@@ -1,3 +1,4 @@
+import loc from '../loc';
 import { useState } from 'react';
 import type UserManager from "../UserManager";
 import Window from "../components/Window";
@@ -16,22 +17,22 @@ export default function Profile({userManager}: {userManager: UserManager}) {
         event.preventDefault();
         setLoading(true);
         userManager.logout()
-            .catch(() => alert('Ошибка при выходе'))
+            .catch(() => alert(loc`Error logging out`))
             .finally(() => setLoading(false));
     };
 
     return (
         <Window cssMaxWidth="800px" activeTab="account" footer={<FooterDownload />} className={loading ? 'loading-overlay' : undefined}>
-            <Window.Tab id="account" header="Аккаунт" className={styles.tabAccount}>
-                <div>Привет, {userManager.userData.name}!</div>
+            <Window.Tab id="account" header={loc`Account`} className={styles.tabAccount}>
+                <div>{loc`Hello, ${{name: userManager.userData.name}}!`}</div>
                 {userManager.userData.mojangUUID ? <MojangProfile uuid={userManager.userData.mojangUUID} /> : null}
-                <Input type="route" name={userManager.userData.mojangUUID ? "Сменить лицензию" : "Привязать лицензию"} value="/mojang" style={{maxWidth: '100%'}} />
-                <Input type="route" name="Сменить пароль" value="/password" style={{maxWidth: '100%'}} />
+                <Input type="route" name={userManager.userData.mojangUUID ? loc`Change license` : loc`Link license`} value="/mojang" style={{maxWidth: '100%'}} />
+                <Input type="route" name={loc`Change password`} value="/password" style={{maxWidth: '100%'}} />
                 <form onSubmit={handleLogout} inert={loading}>
-                    <Input type="submit" name="logout" value="Выйти" style={{maxWidth: '100%'}} />
+                    <Input type="submit" name="logout" value={loc`Logout`} style={{maxWidth: '100%'}} />
                 </form>
             </Window.Tab>
-            <Window.Tab id="skin" header="Скин" className={styles.tabSkin}>
+            <Window.Tab id="skin" header={loc`Skin`} className={styles.tabSkin}>
                 <div className={styles.panel} style={{flexShrink: 0}}>
                     <SkinPreview skinUrl={userManager.selectedSkin?.url} />
                 </div>

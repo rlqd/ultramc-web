@@ -1,3 +1,4 @@
+import loc from '../loc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import type UserManager from '../UserManager';
@@ -6,8 +7,8 @@ import Window from '../components/Window';
 import Input from '../components/Input';
 
 const errorMap: Record<string,string> = {
-    missingParameters: 'Заполните все поля',
-    unknownError: 'Неизвестная ошибка',
+    missingParameters: loc`Please fill all fields`,
+    unknownError: loc`Unknown error`,
 };
 
 export default function Mojang({userManager}: {userManager: UserManager}) {
@@ -32,10 +33,10 @@ export default function Mojang({userManager}: {userManager: UserManager}) {
     return (
         <Window cssMaxWidth='800px' className={loading ? 'loading-overlay' : undefined}>
             <form onSubmit={handleSubmit} inert={loading}>
-                <center>Введите никнейм лицензионного аккаунта. Этот аккаунт сможет заходить на сервера Ultra из стороннего лаунчера.</center>
-                <Input label="Никнейм" name="mojangUsername" type="text" />
-                <Input type="submit" name="submit" value="Привязать аккаунт" main />
-                { userManager.userData.passwordResetRequired ? null : (<Input type="route" name="Назад" />) }
+                <center>{loc`Enter nickname of your license Minecraft account. This account will be able to join Ultra servers using any launcher.`}</center>
+                <Input label={loc`Nickname`} name="mojangUsername" type="text" />
+                <Input type="submit" name="submit" value={loc`Link account`} main />
+                { userManager.userData.passwordResetRequired ? null : (<Input type="route" name={loc`Back`} />) }
                 {error && <Input.Hint text={error} />}
             </form>
         </Window>
